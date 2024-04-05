@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Debugging</title>
+    <link rel="stylesheet" href="./static/css/main.css" />
+    <link rel="stylesheet" href="./node_modules/codemirror/lib/codemirror.css">
+  </head>
+  <body>
+    <nav>
+      <div class="gdsc-logo">
+        <img class="logo" src="./gdsc-logo.png" alt="GDSC-Logo" />
+        <div class="gdsc-title">
+          <div>Google Developers Student Club</div>
+          <div>Anna University Regional Campus Tirunelveli</div>
+        </div>
+      </div>
+      <div class="questions">
+        <div class="question_tab active">Q1</div>
+        <div class="question_tab">Q2</div>
+        <div class="question_tab">Q3</div>
+      </div>
+    </nav>
+    <div class="question-container">
+      <div class="question">Q1. Debug the given code</div>
+      <div class="code-container">
+        <textarea id="code">
+#include <stdio.h>
+int main() {
+printf("Hello, World!");
+return 0;
+}
+          </textarea>
+      </div>
+      <div class="testcases">
+        <span class="test-name">Testcases</span>
+        <div class="testcase">
+          <div class="testcase-num">Testcase 1</div>
+          <div class="ip-op">
+            <div class="testcase-input">Input: Nil</div>
+          <div class="testcase-output">Output: Hello World!</div>
+          </div>
+          
+        </div>
+        <div class="testcase">
+          <div class="testcase-num">Testcase 2</div>
+          <div class="ip-op">
+            <div class="testcase-input">Input: Nil</div>
+          <div class="testcase-output">Output: Hello World!</div>
+          </div>
+          
+        </div>
+      </div>
+      <div class="submit-btn">
+        <button class="button-29" role="button">Submit</button>        </div>
+    </div>
+</div>
+<footer>Designed and Developed by Nishanth R, GDSC Technical Lead</footer>
+<script src="./node_modules/codemirror/lib/codemirror.js"></script>
+<script src="./static/js/main.js"></script>
+  </body>
+</html>
