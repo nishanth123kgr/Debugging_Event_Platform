@@ -1,0 +1,37 @@
+{% macro question_tab(id, text, active=false) %}
+<div id="{{ id }}_btn" class="question_tab{{ ' active' if active else '' }} ques_tab">{{ text }}</div>
+{% endmacro %}
+
+{% macro question_container(id, question, question_desc, code_id, code, testcases, active=false) %}
+<div class="question-container {{ ' active' if active else '' }}" id="{{ id }}">
+  <div class="ques">
+    <div class="question">{{ question }}</div>
+    <div class="question-desc">
+      <p>{{ question_desc }}</p>
+    </div>
+    <div class="code-container">
+      <textarea id="{{ code_id }}">{{ code }}</textarea>
+    </div>
+    <div class="restore-editor">
+        <button class="button-29 btn" role="button">
+          <i class="fas fa-redo-alt"></i>
+        </button>
+      </div>
+    <div class="testcases">
+      <span class="test-name">Testcases</span>
+      {% for testcase in testcases %}
+      <div class="testcase">
+        <div class="testcase-num">{{ testcase.num }}</div>
+        <div class="ip-op">
+          <div class="testcase-input">Input: {{ testcase.input }}</div>
+          <div class="testcase-output">Output: {{ testcase.output }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="submit-btn">
+      <button class="button-29" id="{{id}}_submit" role="button">Submit</button>
+    </div>
+  </div>
+</div>
+{% endmacro %}

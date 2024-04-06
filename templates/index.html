@@ -1,12 +1,30 @@
-{% block head %}
+{% extends 'base.html' %}
+{% import 'question.html' as question_macro %}
 
-    <title>Staff</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-{% endblock %}
+{% block title %}Debugging | GDSC AURCT{% endblock %}
 
 {% block content %}
-    <div class="code-container">
-        
-    </div>
+<nav>
+    <div class="gdsc-logo">
+        <img class="logo" src="{{ url_for('static', filename='logo/gdsc-logo.png')}}" alt="GDSC-Logo" />
+        <div class="gdsc-title">
+          <div>Google Developers Student Clubs</div>
+          <div>Anna University Regional Campus Tirunelveli</div>
+        </div>
+      </div>
+    
+</nav>
+<div class="question_tab_container"><div class="questions">
+    {{ question_macro.question_tab('q1', 'Q1', active=true) }}
+    {{ question_macro.question_tab('q2', 'Q2') }}
+    {{ question_macro.question_tab('q3', 'Q3') }}
+      </div></div>
 
+{% for question in questions %}
+{% set q_id = 'q' ~ loop.index %}
+{% set code_id = 'code' ~ loop.index %}
+{{ question_macro.question_container(q_id, question.question, question.question_desc, code_id, question.code, question.testcases, active=question.active) }}
+{% endfor %}
 {% endblock %}
+
+
