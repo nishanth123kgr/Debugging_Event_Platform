@@ -18,17 +18,20 @@ body {
 }
 
 .question-container{
-  display: none;
-  position: relative;
+  position: absolute;
   background-color: #fff;
   width: 90%;
   border-radius: 15px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   padding: 20px;
+  z-index: -100;
+  visibility: hidden;
 }
 
 .question-container.active{
-  display: block;
+  position: relative;
+  visibility: visible;
+  z-index: 1;
 }
 
 
