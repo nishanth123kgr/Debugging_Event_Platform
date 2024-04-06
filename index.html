@@ -5,59 +5,168 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Debugging</title>
     <link rel="stylesheet" href="./static/css/main.css" />
-    <link rel="stylesheet" href="./static/libs/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="./static/libs/codemirror/lib/codemirror.css" />
+    <link rel="stylesheet" href="./static/css/fontawesome.css" />
+    <link
+      rel="shortcut icon"
+      href="./static/ico/favicon-32x32.png"
+      type="image/x-icon"
+    />
   </head>
   <body>
     <nav>
       <div class="gdsc-logo">
-        <img class="logo" src="./gdsc-logo.png" alt="GDSC-Logo" />
+        <img class="logo" src="./static/logo/gdsc-logo.png" alt="GDSC-Logo" />
         <div class="gdsc-title">
-          <div>Google Developers Student Club</div>
+          <div>Google Developers Student Clubs</div>
           <div>Anna University Regional Campus Tirunelveli</div>
         </div>
       </div>
       <div class="questions">
-        <div class="question_tab active">Q1</div>
-        <div class="question_tab">Q2</div>
-        <div class="question_tab">Q3</div>
+        <div id="q1_btn" class="question_tab active">Q1</div>
+        <div id="q2_btn" class="question_tab">Q2</div>
+        <div id="q3_btn" class="question_tab">Q3</div>
       </div>
     </nav>
-    <div class="question-container">
-      <div class="question">Q1. Debug the given code</div>
-      <div class="code-container">
-        <textarea id="code">
+    <div class="question-container active" id="q1">
+      <div class="ques">
+        <div class="question">Q1. Debug the given code</div>
+        <div class="question-desc">
+          <p>
+            The following code is supposed to print "Hello, World!" but it is
+            not printing anything. Debug the code and make it work.
+          </p>
+        </div>
+
+        <div class="code-container">
+          <textarea id="code1">
 #include <stdio.h>
 int main() {
-printf("Hello, World!");
-return 0;
+print("Hello, World!");
 }
           </textarea>
-      </div>
-      <div class="testcases">
-        <span class="test-name">Testcases</span>
-        <div class="testcase">
-          <div class="testcase-num">Testcase 1</div>
-          <div class="ip-op">
-            <div class="testcase-input">Input: Nil</div>
-          <div class="testcase-output">Output: Hello World!</div>
-          </div>
-          
         </div>
-        <div class="testcase">
-          <div class="testcase-num">Testcase 2</div>
-          <div class="ip-op">
-            <div class="testcase-input">Input: Nil</div>
-          <div class="testcase-output">Output: Hello World!</div>
+        <div class="restore-editor">
+          <button class="button-29 btn" role="button">
+            <i class="fas fa-redo-alt"></i>
+          </button>
+        </div>
+        <div class="testcases">
+          <span class="test-name">Testcases</span>
+          <div class="testcase">
+            <div class="testcase-num">Testcase 1</div>
+            <div class="ip-op">
+              <div class="testcase-input">Input: Nil</div>
+              <div class="testcase-output">Output: Hello World!</div>
+            </div>
           </div>
-          
+          <div class="testcase">
+            <div class="testcase-num">Testcase 2</div>
+            <div class="ip-op">
+              <div class="testcase-input">Input: Nil</div>
+              <div class="testcase-output">Output: Hello World!</div>
+            </div>
+          </div>
+        </div>
+        <div class="submit-btn">
+          <button class="button-29" role="button">Submit</button>
         </div>
       </div>
-      <div class="submit-btn">
-        <button class="button-29" role="button">Submit</button>        </div>
     </div>
-</div>
-<footer>Designed and Developed by Nishanth R, GDSC Technical Lead</footer>
-<script src="./static/libs/codemirror/lib/codemirror.js"></script>
-<script src="./static/js/main.js"></script>
+    <div class="question-container" id="q2">
+      <div class="ques">
+        <div class="question">Q2. Debug the given code</div>
+        <div class="question-desc">
+          <p>
+            The following code is supposed to print "Hello, World!" but it is
+            not printing anything. Debug the code and make it work.
+          </p>
+        </div>
+
+        <div class="code-container">
+          <textarea id="code2">
+#include <stdio.h>
+int main() {
+print("Hello, World!");
+}
+      </textarea
+          >
+        </div>
+        <div class="restore-editor">
+          <button class="button-29 btn" role="button">
+            <i class="fas fa-redo-alt"></i>
+          </button>
+        </div>
+        <div class="testcases">
+          <span class="test-name">Testcases</span>
+          <div class="testcase">
+            <div class="testcase-num">Testcase 1</div>
+            <div class="ip-op">
+              <div class="testcase-input">Input: Nil</div>
+              <div class="testcase-output">Output: Hello World!</div>
+            </div>
+          </div>
+          <div class="testcase">
+            <div class="testcase-num">Testcase 2</div>
+            <div class="ip-op">
+              <div class="testcase-input">Input: Nil</div>
+              <div class="testcase-output">Output: Hello World!</div>
+            </div>
+          </div>
+        </div>
+        <div class="submit-btn">
+          <button class="button-29" role="button">Submit</button>
+        </div>
+      </div>
+    </div>
+    <div class="question-container" id="q3">
+      <div class="ques">
+        <div class="question">Q3. Debug the given code</div>
+        <div class="question-desc">
+          <p>
+            The following code is supposed to print "Hello, World!" but it is
+            not printing anything. Debug the code and make it work.
+          </p>
+        </div>
+
+        <div class="code-container">
+          <textarea id="code3">
+#include <stdio.h>
+int main() {
+print("Hello, World!");
+}
+      </textarea
+          >
+        </div>
+        <div class="restore-editor">
+          <button class="button-29 btn" role="button">
+            <i class="fas fa-redo-alt"></i>
+          </button>
+        </div>
+        <div class="testcases">
+          <span class="test-name">Testcases</span>
+          <div class="testcase">
+            <div class="testcase-num">Testcase 1</div>
+            <div class="ip-op">
+              <div class="testcase-input">Input: Nil</div>
+              <div class="testcase-output">Output: Hello World!</div>
+            </div>
+          </div>
+          <div class="testcase">
+            <div class="testcase-num">Testcase 2</div>
+            <div class="ip-op">
+              <div class="testcase-input">Input: Nil</div>
+              <div class="testcase-output">Output: Hello World!</div>
+            </div>
+          </div>
+        </div>
+        <div class="submit-btn">
+          <button class="button-29" role="button">Submit</button>
+        </div>
+      </div>
+    </div>
+    <footer>Designed and Developed by Nishanth R, GDSC Technical Lead</footer>
+    <script src="./static/libs/codemirror/lib/codemirror.js"></script>
+    <script src="./static/js/main.js"></script>
   </body>
 </html>

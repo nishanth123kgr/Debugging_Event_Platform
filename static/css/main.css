@@ -10,20 +10,25 @@ body {
     font-family: 'Montserrat', sans-serif;
     margin: 0;
     background-color: var(--tertiary);
-    height: 100vh;
     width: 100vw;
-    overflow: hidden;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .question-container{
+  display: none;
+  position: relative;
   background-color: #fff;
   width: 90%;
   border-radius: 15px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   padding: 20px;
+}
+
+.question-container.active{
+  display: block;
 }
 
 
@@ -91,11 +96,9 @@ nav .questions{
 }
 
 footer{
-  position: absolute;
-  bottom: 0;
   width: 100%;
   text-align: center;
-  padding-bottom: 10px;
+  padding: 10px 0;
   font-size: 0.8rem;
 }
 
@@ -127,6 +130,18 @@ footer{
   padding: 20px 20px 0 0;
 }
 
+.btn{
+  background-color: var(--secondary);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
 /* CSS */
 .button-29 {
   align-items: center;
@@ -147,7 +162,6 @@ footer{
   overflow: hidden;
   padding-left: 16px;
   padding-right: 16px;
-  position: relative;
   text-align: left;
   text-decoration: none;
   transition: box-shadow .15s,transform .15s;
