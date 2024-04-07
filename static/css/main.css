@@ -45,7 +45,7 @@ body {
 nav{
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   width: 90%;
   height: 100px;
 }
@@ -58,6 +58,40 @@ nav{
 nav .logo{
   width: 100px;
   height: 100px;
+}
+
+.user_details{
+  display: flex;
+  align-items: center;
+}
+
+.user{
+  text-align: right;
+}
+
+.user div:first-child{
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding-bottom: 5px;
+}
+
+.user-profile{
+  margin: 0 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+}
+
+.user-profile img{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
 
 .gdsc-title{
@@ -110,6 +144,22 @@ nav .logo{
 .code-container{
   padding: 0 0 20px;
 
+}
+
+.timer{
+  border-radius: 6px;
+  background-color: white;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 5px 10px;
+}
+
+.timer-title{
+  padding-bottom: 3px;
 }
 
 footer{
@@ -190,6 +240,32 @@ footer{
   font-size: 18px;
 }
 
+.solved {
+  display: none;
+  align-items: center;
+  appearance: none;
+  background: linear-gradient(109.6deg, rgb(0, 204, 130) 11.2%, rgb(58, 181, 46) 91.7%);  border-radius: 6px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;  box-sizing: border-box;
+  font-family: "JetBrains Mono",monospace;
+  height: 40px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 18px;
+  right: 80px;
+}
+
 .button-29:focus {
   box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
 }
@@ -215,7 +291,6 @@ footer{
   color: #fff;
   cursor: pointer;
   display: inline-flex;
-  font-family: "JetBrains Mono",monospace;
   height: 40px;
   justify-content: center;
   line-height: 1;
@@ -231,7 +306,6 @@ footer{
   touch-action: manipulation;
   white-space: nowrap;
   will-change: box-shadow,transform;
-  font-size: 18px;
 }
 
 .ques_tab:focus {
@@ -250,4 +324,8 @@ footer{
 
 .ques_tab.active{
   background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+}
+
+.qn_timer{
+  font-size: 0.7rem;
 }

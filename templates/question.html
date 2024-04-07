@@ -1,8 +1,8 @@
 {% macro question_tab(id, text, active=false) %}
-<div id="{{ id }}_btn" class="question_tab{{ ' active' if active else '' }} ques_tab">{{ text }}</div>
+  <div id="{{ id }}_btn" class="question_tab{{ ' active' if active else '' }} ques_tab">{{ text }}&nbsp;<span class="qn_timer" id="{{id}}_timer">00:00</span></div>
 {% endmacro %}
 
-{% macro question_container(id, question, question_desc, code_id, code, testcases, active=false) %}
+{% macro question_container(id, question, question_desc, code_id, code, testcases, status, active=false) %}
 <div class="question-container {{ ' active' if active else '' }}" id="{{ id }}">
   <div class="ques">
     <div class="question">{{ question }}</div>
@@ -13,9 +13,15 @@
       <textarea id="{{ code_id }}">{{ code }}</textarea>
     </div>
     <div class="restore-editor">
-        <button class="button-29 btn" role="button">
+        <button class="button-29 btn" id="{{id}}_reset" role="button">
           <i class="fas fa-redo-alt"></i>
         </button>
+      </div>
+      <div>
+        <div class="btn solved" id="{{id}}_solved" role="button" style="{{'display: inline-flex;' if status == 1 else 'display: none;'}}">
+          Solved&nbsp;
+          <i class="fa-regular fa-circle-check"></i>
+        </div>
       </div>
     <div class="testcases">
       <span class="test-name">Testcases</span>
@@ -30,7 +36,8 @@
       {% endfor %}
     </div>
     <div class="submit-btn">
-      <button class="button-29" id="{{id}}_submit" role="button">Submit</button>
+      <button class="button-29" id="{{id}}_submit" role="button">Submit <span id="spinner" style="display: none;">&nbsp;<i class="fa-solid fa-circle-notch fa-spin"></i></span>
+      </button>
     </div>
   </div>
 </div>

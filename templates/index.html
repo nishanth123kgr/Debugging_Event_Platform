@@ -13,18 +13,42 @@
         </div>
       </div>
     
+    <div class="user_details">
+      <div class="timer">
+        <div class="timer-title">Time Left</div>
+        <div class="timer-container">
+          <div class="timer-value" id="timer">00:00:00</div>
+        </div>
+        </div>
+        <div class="user">
+        <div class="name"><strong>{{ user.name }}</strong></div>
+        <div class="user_name">{{ user.username }}</div>
+      </div>
+        <div class="user-profile">
+        <img class="profile" src="{{ url_for('static', filename='logo/gdsc-logo.png')}}" alt="User-Profile" />
+        </div>
+    </div>
+    
 </nav>
 <div class="question_tab_container"><div class="questions">
     {{ question_macro.question_tab('q1', 'Q1', active=true) }}
     {{ question_macro.question_tab('q2', 'Q2') }}
     {{ question_macro.question_tab('q3', 'Q3') }}
+    {{ question_macro.question_tab('q4', 'Q4') }}
+    {{ question_macro.question_tab('q5', 'Q5') }}
       </div></div>
 
 {% for question in questions %}
 {% set q_id = 'q' ~ loop.index %}
 {% set code_id = 'code' ~ loop.index %}
-{{ question_macro.question_container(q_id, question.question, question.question_desc, code_id, question.code, question.testcases, active=question.active) }}
+{% set q_status = user[q_id ~ '_status'] %}
+{{ question_macro.question_container(q_id, question.question, question.question_desc, code_id, question.code, question.testcases, q_status, active=question.active) }}
 {% endfor %}
 {% endblock %}
 
+{% block custom_js %}
+<script>
+  let default_codes = JSON.parse('{{ codes| safe }}');
+</script>
+{% endblock %}
 
