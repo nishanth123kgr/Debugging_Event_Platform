@@ -1,0 +1,56 @@
+{% macro question_tab(id, text, active=false) %}
+<div
+  id="{{ id }}_btn"
+  class="question_tab{{ ' active' if active else '' }} ques_tab"
+>
+  {{ text }}
+</div>
+{% endmacro %} {% macro question_container(id, data, active=false) %}
+<div class="question-container {{ ' active' if active else '' }}" id="{{ id }}">
+  <table class="fl-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Submitted Time</th>
+        <th>Time Taken</th>
+        <th>Score</th>
+        <th>Code</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sub in data %} 
+      <tr>
+        <td>{{ sub.id }}</td>
+        <td>{{ sub.submitted_time}}</td>
+        <td>{{ sub.time_taken }}</td>
+        <td>{{ sub.score }}</td>
+        <td>{{ sub.code }}</td>
+      </tr>
+      {% endfor %} 
+    </tbody>
+  </table>
+</div>
+{% endmacro %} {% macro leader_board(id, data, active=false) %}
+<div class="question-container {{ ' active' if active else '' }}" id="{{ id }}">
+  <table class="fl-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Mobile</th>
+        <th>Password</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in data %}
+      <tr>
+        <td>{{ user.name }}</td>
+        <td>{{ user.username}}</td>
+        <td>{{ user.password }}</td>
+        <td>{{ user.total_score }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endmacro %}

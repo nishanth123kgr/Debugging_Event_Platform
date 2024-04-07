@@ -47,8 +47,12 @@
 {% endblock %}
 
 {% block custom_js %}
+<script src="{{ url_for('static', filename='libs/codemirror/lib/codemirror.js') }}"></script>
+  <script src="{{ url_for('static', filename='libs/sweetalert/sweetalert2.all.js') }}"></script>
+  <script src="{{ url_for('static', filename='libs/easytimer/timer.js') }}"></script>
 <script>
   let default_codes = JSON.parse('{{ codes| safe }}');
 </script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 {% endblock %}
 

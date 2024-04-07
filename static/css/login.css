@@ -1,0 +1,200 @@
+@font-face {
+  font-family: "Montserrat";
+  src: url(../webfonts/Montserrat-Regular.ttf);
+}
+html,
+body {
+  background-color: #dff5ff;
+  font-family: 'Montserrat', sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+  margin-top: -21px;
+}
+
+input[type="text"],
+input[type="password"] {
+  display: block;
+  width: 80%;
+  margin-left: 10.5%;
+  margin-top: 6%;
+  margin-bottom: 2%;
+  min-width: 100px;
+  height: 30px;
+  padding: 4px;
+  padding-right: 4px;
+  padding-left: 4px;
+  border: none;
+  border-radius: 2px;
+  background-color: #ebf9ff;
+  border-bottom: 2px solid #5468ff;
+  font-size: 15px;
+  z-index: 3;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  outline: none;
+}
+
+input[type="text"]:autofill,
+input[type="password"]:autofill {
+  background-color: #6da66a !important;
+}
+
+.loginDiv {
+  height: 70vh;
+  width: 500px;
+  background-color: #ebf9ff;
+  border-radius: 35px;
+  box-sizing: content-box;
+  box-shadow: 0 0 20px -8px #6591a3;
+  display: flex;
+  flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+  font-size: 26px;
+  text-align: center;
+  padding-top: 4px;
+  /* 	padding-bottom: 5px; */
+  color: #5468ff;
+  -webkit-touch-callout: none;
+}
+
+label {
+  position: relative;
+  top: -40px;
+  margin-left: 10.5%;
+  font-size: 15px;
+  z-index: 0;
+  transition: all 0.4s;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+}
+
+#password:focus ~ label,
+#password:valid ~ label {
+  font-size: 14px;
+  top: -70px;
+  transition: all 0.2s;
+  color: #5468ff;
+}
+
+#username:focus ~ label,
+#username:valid ~ label {
+  font-size: 14px;
+  top: -70px;
+  transition: all 0.2s;
+  color: #5468ff;
+}
+
+#username:valid ~ .error {
+  display: none;
+}
+
+.inputField {
+  height: 40px;
+  width: 80%;
+  padding-bottom: 30px;
+}
+
+.error {
+  display: none;
+  width: 80%;
+  margin: auto;
+  color: #df2e38;
+  margin-top: -20px;
+}
+
+input[aria-invalid="true"] {
+  border-bottom: 2px solid #5468ff;
+}
+
+.gdsc-title {
+  text-align: center;
+}
+
+.gdsc-title div:first-child {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.gdsc-title div:last-child {
+  font-size: 0.8rem;
+  font-weight: 400;
+  padding-left: 2px;
+}
+
+.button-29 {
+
+  align-items: center;
+  appearance: none;
+  background-image: radial-gradient(
+    100% 100% at 100% 0,
+    #5adaff 0,
+    #5468ff 100%
+  );
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono", monospace;
+  height: 40px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 18px;
+}
+
+.button-29:focus {
+  box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+}
+
+.button-29:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.button-29:active {
+  box-shadow: #3c4fe0 0 3px 7px inset;
+  transform: translateY(2px);
+}
+.gdsc-logo {
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+}
+
+.log-btn {
+  margin-top: 20px;
+  display: flex;
+    justify-content: flex-end;
+}
