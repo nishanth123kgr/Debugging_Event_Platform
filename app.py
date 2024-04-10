@@ -38,21 +38,17 @@ app.secret_key = '875dee07a28e825074bff0e1b7da9564e107c4e3e5b809cb'
 questions = [{
         'question': 'Debug the code',
         'question_desc': 'The code is not working as expected. Find the bug and fix it.',
-        'code': '#include <stdio.h>\nint main(int argc, char* argv[]) {\n\tprintf("Hello %s!", argv[1]);\n\treturn 0;\n}',
+        'code': '#include <stdio.h>\nvoid main(int argc, char* argv[]) {\n\tprintf("Hello %c!, argv[1]);\n\treturn 0;\n}',
         'active': True,
         'testcases': [
         {'num': 'Testcase 1', 'input': 'There', 'output': 'Hello There!'},
         {'num': 'Testcase 2', 'input': 'World', 'output': 'Hello World!'}
     ],
-        'private_testcases': [
-        {'num': 'Testcase 1', 'input': 'Friends', 'output': 'Hello Friends!'},
-        {'num': 'Testcase 2', 'input': 'Globe', 'output': 'Hello Globe!'}
-        ]
     },
                  {
-        'question': 'Find the output',
-        'question_desc': 'What will be the output of the following code?',
-        'code': "#include <stdio.h>\n\t#include <stdlib.h>\n\n\tint main(int argc, char* argv[]) {\n\t\tif (argc != 3) {\n\t\t\tprintf(\"Usage: %s <number1> <number2>\\n\", argv[0]);\n\t\t\treturn 1; // Return an error code\n\t\t}\n\n\t\tint num1 = atoi(argv[1]);\n\t\tint num2 = atoi(argv[2]);\n\n\t\tprintf(\"%d\\n\", num1 + num2);\n\n\t\treturn 0;\n\t}\n",
+        'question': 'Add two numbers',
+        'question_desc': 'Debug the program to add two numbers.',
+        'code': "#include <stdio.h>\n\t#include <stdlib.h>\n\n\tint main(int argc, char* argv[]) {\n\t\tif (argc != 3) {\n\t\t\tprintf(\"Usage: %s <number1> <number2>\\n\", argv[0]);\n\t\t\treturn 1; // Return an error code\n\t\t}\n\n\t\tint num1 = atoi(argv[1];\n\t\tint num2 = ati(argv[2]);\n\n\t\tprintf(\"%d\\n\", num1 % num2);\n\n\t\treturn 0;\n\t}\n",
         'active': False,
         'testcases': [
         {'num': 'Testcase 1', 'input': '3 5', 'output': '8'},
@@ -60,39 +56,34 @@ questions = [{
     ]
         },
                  {
-        'question': 'Write the code',
-        'question_desc': 'Write a program to print "Hello World!"',
-        'code': 'Nil',
+        'question': 'Palindrome or not?',
+        'question_desc': 'Debug the program to check if a number is a palindrome or not.',
+        'code': "#include <stdio.h>\n#include <stdlib.h>\nint main(int argc, char* argv[]) {\n\tint n= atoi(argv[1]), reversed = 0, remainder, original = n;\n\toriginal = 0;\n\n\twhile (n != 0) {\n\t\tremainder = n / 10;\n\t\treversed = reversed * 10 + remainder;\n\t\tn %= 10;\n\t}\n\n\tif (original =! reversed)\n\t\tprintf(\"%d is a palindrome.\", original);\n\telse\n\t\tprintf(\"%d is not a palindrome.\", original);\n\n\treturn 0;\n}\n",
         'active': False,
         'testcases': [
-        {'num': 'Testcase 1', 'input': 'Thizz', 'output': 'Thizz!'},
-        {'num': 'Testcase 2', 'input': 'Fizz', 'output': 'Fizz!'}
+        {'num': 'Testcase 1', 'input': '141', 'output': '141 is a palindrome.'},
+        {'num': 'Testcase 2', 'input': '145', 'output': '145 is not a palindrome.'}
     ],
-        'private_testcases': [
-        {'num': 'Testcase 1', 'input': 'Fizz', 'output': 'Fizz!'},
-        {'num': 'Testcase 2', 'input': 'Rizz', 'output': 'Rizz!'}
-        ]
+        
         },
                  {
-        },
-                 {
-        'question': 'Write the code',
-        'question_desc': 'Write a program to print "Hello World!"',
-        'code': 'Nil',
+        'question': 'Sum of digits',
+        'question_desc': 'Debug the program to find the sum of digits of a number.',
+        'code': "#include<stdio.h>\n#include <stdlib.h>\nvoid main(int argc, char* argv[])\n{\n    int n = atoi(argv[1]), sum = 0, m;\n    while (n < 0)\n    {\n        m = n / 10;\n        sum = sum - m;\n        n = n / 10;\n    }\n    printf(\"%d\", sum);\n    return 0;\n}\n",
         'active': False,
         'testcases': [
-        {'num': 'Testcase 1', 'input': 'Thizz', 'output': 'Thizz!'},
-        {'num': 'Testcase 2', 'input': 'Fizz', 'output': 'Fizz!'}
+        {'num': 'Testcase 1', 'input': '141', 'output': '6'},
+        {'num': 'Testcase 2', 'input': '143', 'output': '8'}
     ]
         },
                  {
-        'question': 'Find the output',
-        'question_desc': 'What will be the output of the following code?',
-        'code': '#include <stdio.h>\nint main() {\n\tprintf("Hello World!");\n\treturn 0;\n}',
+        'question': 'First n prime numbers',
+        'question_desc': 'Debug the program to print the first n prime numbers.',
+        'code': "#include <stdio.h>\n#include <stdlib.h>\n\nint main(int argc, char *argv[])\n{\n    if (argc != 2) { printf(\"Usage: %s <number>\\n\", argv[0]); return 1; }\n    int n = atoi(argv[1]);\n    if (n < 1) { printf(\"Please enter a positive integer.\\n\"); return 1; }\n    printf(\"2 \"); int count = 1; int num = 3;\n    while (count > n) {\n        int is_prime = 0; for (int i = 2; i * i <= num; i++) {\n            if (num % i == 0) { is_prime = 0; break; }\n        }\n        if (is_prime) { printf(\"%d \", num); count--; }\n        num += 2;\n    }\n    printf(\"\\n\"); return 0;\n}",
         'active': False,
         'testcases': [
-        {'num': 'Testcase 1', 'input': 'SSSS', 'output': 'Hello SSSS!'},
-        {'num': 'Testcase 2', 'input': 'DDDD', 'output': 'Hello DDDD!'}
+        {'num': 'Testcase 1', 'input': '5', 'output': '2 3 5 7 11'},
+        {'num': 'Testcase 2', 'input': '7', 'output': '2 3 5 7 11 13 17'}
     ]
         }
                  ]
@@ -116,11 +107,11 @@ def show_index():
     
     
     codes = json.dumps([
-    "#include <stdio.h>\\nint main() {\\n\\tprintf(\\\"Hello World!\\\");\\n\\treturn 0;\\n}",
-    "#include <stdio.h>\\nint main() {\\n\\tprintf(\\\"Hello World!\\\");\\n\\treturn 0;\\n}",
-    "Nil",
-    "Nil",
-    "#include <stdio.h>\\nint main() {\\n\\tprintf(\\\"Hello World!\\\");\\n\\treturn 0;\\n}",
+    '#include <stdio.h>\nvoid main(int argc, char* argv[]) {\n\tprintf("Hello %c!, argv[1]);\n\treturn 0;\n}',
+    "#include <stdio.h>\n\t#include <stdlib.h>\n\n\tint main(int argc, char* argv[]) {\n\t\tif (argc != 3) {\n\t\t\tprintf(\"Usage: %s <number1> <number2>\\n\", argv[0]);\n\t\t\treturn 1; // Return an error code\n\t\t}\n\n\t\tint num1 = atoi(argv[1];\n\t\tint num2 = ati(argv[2]);\n\n\t\tprintf(\"%d\\n\", num1 % num2);\n\n\t\treturn 0;\n\t}\n",
+    "#include <stdio.h>\n#include <stdlib.h>\nint main(int argc, char* argv[]) {\n\tint n= atoi(argv[1]), reversed = 0, remainder, original = n;\n\toriginal = 0;\n\n\twhile (n != 0) {\n\t\tremainder = n / 10;\n\t\treversed = reversed * 10 + remainder;\n\t\tn %= 10;\n\t}\n\n\tif (original =! reversed)\n\t\tprintf(\"%d is a palindrome.\", original);\n\telse\n\t\tprintf(\"%d is not a palindrome.\", original);\n\n\treturn 0;\n}\n",
+    "#include<stdio.h>\n#include <stdlib.h>\nvoid main(int argc, char* argv[])\n{\n    int n = atoi(argv[1]), sum = 0, m;\n    while (n < 0)\n    {\n        m = n / 10;\n        sum = sum - m;\n        n = n / 10;\n    }\n    printf(\"%d\", sum);\n    return 0;\n}\n",
+    "#include <stdio.h>\n#include <stdlib.h>\n\nint main(int argc, char *argv[])\n{\n    if (argc != 2) { printf(\"Usage: %s <number>\\n\", argv[0]); return 1; }\n    int n = atoi(argv[1]);\n    if (n < 1) { printf(\"Please enter a positive integer.\\n\"); return 1; }\n    printf(\"2 \"); int count = 1; int num = 3;\n    while (count > n) {\n        int is_prime = 0; for (int i = 2; i * i <= num; i++) {\n            if (num % i == 0) { is_prime = 0; break; }\n        }\n        if (is_prime) { printf(\"%d \", num); count--; }\n        num += 2;\n    }\n    printf(\"\\n\"); return 0;\n}",
     ])
     if request.method == 'POST':
         code = request.form['code']
@@ -142,7 +133,7 @@ def submit_code():
     print(code)
     run = RunCCode(code)
     rescompil, resrun = run.run_c_code()
-    for i in questions[int(qn)-1]['testcases']+questions[int(qn)-1]['private_testcases']:
+    for i in questions[int(qn)-1]['testcases']:
         print(i)
         run = RunCCode(code, i['input'])
         rescompil, resrun = run.run_c_code()
