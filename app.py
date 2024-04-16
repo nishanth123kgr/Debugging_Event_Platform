@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, session, url_for, redirect
 from flask_socketio import SocketIO
-from runcode import RunCCode
+from runcode import RunCCode, RunPyCode
 import json
 from time import sleep
 import mysql.connector
@@ -88,9 +88,113 @@ questions = [{
         }
                  ]
 
+questions_py = [{
+        'question': 'Sum of Array Elements',
+        'question_desc': 'The code is not working as expected. Find the bug and fix it.',
+        'code': '''
+import sys
+arr = [int(i) for i in sys.argv[1:]] # Dont change this line
+ 
+ans = 1
+for i in arr:
+    ans=+i
+ 
+# display sum
+print(ans, 5)
 
-@app.route('/', methods=['GET', 'POST'])
+        ''',
+        'active': True,
+        'testcases': [
+        {'num': 'Testcase 1', 'input': '1 2 4', 'output': '7'},
+        {'num': 'Testcase 2', 'input': '7 3 7 4 6', 'output': '27'}
+    ],
+    },
+                 {
+        'question': 'Simple Interest',
+        'question_desc': 'Debug the program to find simple interest.',
+        'code': '''
+import sys
+
+# Modify the code in the below function
+def simple_interest(p,r,t):
+
+     
+    si = (p * t + r/100)
+     
+    rturn is
+    
+    
+# Dont Touch the below code
+p = int(sys.argv[1])
+t = int(sys.argv[2])
+r = int(sys.argv[3])
+
+print(simple_interest(p, t, r))
+        ''',
+            'active': False,
+        'testcases': [
+        {'num': 'Testcase 1', 'input': '10000 5 5', 'output': '2500.0'},
+        {'num': 'Testcase 2', 'input': '12000 3 4', 'output': '1440.0'}
+    ]
+        },
+                 {
+        'question': 'Swap first and last element',
+        'question_desc': 'Debug the program to swap the first and last element of a list.',
+        'code': '''
+import sys
+arr = [int(x) for x in sys.argv[1:]] # Don't change this line
+
+def swapList(newList):
+    size_ = len(newList)
+     
+    # Swapping 
+    temp = newList[0]
+    newList[0] += newList[size]
+    newList[size+2] = temp
+     
+    return newL1st
+     
+ 
+print(swapList(arr))
+        ''',
+        'active': False,
+        'testcases': [
+        {'num': 'Testcase 1', 'input': '1 2 3 4 5', 'output': '[5, 2, 3, 4, 1]'},
+        {'num': 'Testcase 2', 'input': '9 5 7 3 1 6 4 8', 'output': '[8, 5, 7, 3, 1, 6, 4, 9]'}
+    ],
+        
+        },
+                 {
+        'question': 'Sum of digits',
+        'question_desc': 'Debug the program to find the sum of digits of a number.',
+        'code': "#include<stdio.h>\n#include <stdlib.h>\nvoid main(int argc, char* argv[])\n{\n    int n = atoi(argv[1]), sum = 0, m;\n    while (n < 0)\n    {\n        m = n / 10;\n        sum = sum - m;\n        n = n / 10;\n    }\n    printf(\"%d\", sum);\n    return 0;\n}\n",
+        'active': False,
+        'testcases': [
+        {'num': 'Testcase 1', 'input': '141', 'output': '6'},
+        {'num': 'Testcase 2', 'input': '143', 'output': '8'}
+    ]
+        },
+                 {
+        'question': 'First n prime numbers',
+        'question_desc': 'Debug the program to print the first n prime numbers.',
+        'code': "#include <stdio.h>\n#include <stdlib.h>\n\nint main(int argc, char *argv[])\n{\n    if (argc != 2) { printf(\"Usage: %s <number>\\n\", argv[0]); return 1; }\n    int n = atoi(argv[1]);\n    if (n < 1) { printf(\"Please enter a positive integer.\\n\"); return 1; }\n    printf(\"2 \"); int count = 1; int num = 3;\n    while (count > n) {\n        int is_prime = 0; for (int i = 2; i * i <= num; i++) {\n            if (num % i == 0) { is_prime = 0; break; }\n        }\n        if (is_prime) { printf(\"%d \", num); count--; }\n        num += 2;\n    }\n    printf(\"\\n\"); return 0;\n}",
+        'active': False,
+        'testcases': [
+        {'num': 'Testcase 1', 'input': '5', 'output': '2 3 5 7 11'},
+        {'num': 'Testcase 2', 'input': '7', 'output': '2 3 5 7 11 13 17'}
+    ]
+        }
+                 ]
+
+@app.route('/')
+def home():
+    return redirect(url_for('login'))
+
+
+@app.route('/c', methods=['GET', 'POST'])
 def show_index():
+    if session['lang'] != 'c':
+        return "Please choose Python as language and try again!!"
     
     if 'username' not in session:
         return redirect(url_for('login'))
@@ -98,7 +202,10 @@ def show_index():
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor(dictionary=True)
     cursor.execute('SELECT name, q1_status, q2_status, q3_status, q4_status, q5_status from users WHERE username = %s', (session['username'],))
-    user_details = cursor.fetchall()[0]
+    user = cursor.fetchall()
+    if not user:
+        redirect(url_for('login'))
+    user_details = user[0]
     user_details['username'] = session['username']
     cursor.reset()
     conn.close()
@@ -123,21 +230,77 @@ def show_index():
         pass
     return render_template('index.html', user=user_details, questions=questions, codes=codes)
 
+@app.route('/py', methods=['GET', 'POST'])
+def show_index_py():
+    if session['lang'] != 'py':
+        return "Please choose C as language and try again!!"
+    
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    print(session['username'])
+    conn = mysql.connector.connect(**db_config)
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute('SELECT name, q1_status, q2_status, q3_status, q4_status, q5_status from users WHERE username = %s', (session['username'],))
+    user = cursor.fetchall()
+    if not user:
+        return redirect(url_for('login'))
+    user_details = user[0]
+    user_details['username'] = session['username']
+    cursor.reset()
+    conn.close()
+    
+    print(user_details)
+    
+    
+    codes = json.dumps([
+    '#include <stdio.h>\nvoid main(int argc, char* argv[]) {\n\tprintf("Hello %c!, argv[1]);\n\treturn 0;\n}',
+    "#include <stdio.h>\n\t#include <stdlib.h>\n\n\tint main(int argc, char* argv[]) {\n\t\tif (argc != 3) {\n\t\t\tprintf(\"Usage: %s <number1> <number2>\\n\", argv[0]);\n\t\t\treturn 1; // Return an error code\n\t\t}\n\n\t\tint num1 = atoi(argv[1];\n\t\tint num2 = ati(argv[2]);\n\n\t\tprintf(\"%d\\n\", num1 % num2);\n\n\t\treturn 0;\n\t}\n",
+    "#include <stdio.h>\n#include <stdlib.h>\nint main(int argc, char* argv[]) {\n\tint n= atoi(argv[1]), reversed = 0, remainder, original = n;\n\toriginal = 0;\n\n\twhile (n != 0) {\n\t\tremainder = n / 10;\n\t\treversed = reversed * 10 + remainder;\n\t\tn %= 10;\n\t}\n\n\tif (original =! reversed)\n\t\tprintf(\"%d is a palindrome.\", original);\n\telse\n\t\tprintf(\"%d is not a palindrome.\", original);\n\n\treturn 0;\n}\n",
+    "#include<stdio.h>\n#include <stdlib.h>\nvoid main(int argc, char* argv[])\n{\n    int n = atoi(argv[1]), sum = 0, m;\n    while (n < 0)\n    {\n        m = n / 10;\n        sum = sum - m;\n        n = n / 10;\n    }\n    printf(\"%d\", sum);\n    return 0;\n}\n",
+    "#include <stdio.h>\n#include <stdlib.h>\n\nint main(int argc, char *argv[])\n{\n    if (argc != 2) { printf(\"Usage: %s <number>\\n\", argv[0]); return 1; }\n    int n = atoi(argv[1]);\n    if (n < 1) { printf(\"Please enter a positive integer.\\n\"); return 1; }\n    printf(\"2 \"); int count = 1; int num = 3;\n    while (count > n) {\n        int is_prime = 0; for (int i = 2; i * i <= num; i++) {\n            if (num % i == 0) { is_prime = 0; break; }\n        }\n        if (is_prime) { printf(\"%d \", num); count--; }\n        num += 2;\n    }\n    printf(\"\\n\"); return 0;\n}",
+    ])
+    if request.method == 'POST':
+        code = request.form['code']
+        run = RunCCode(code)
+        rescompil, resrun = run.run_c_code()
+        if not resrun:
+            resrun = 'No result!'
+    else:
+        pass
+    return render_template('index.html', user=user_details, questions=questions_py, codes=codes)
+
 @app.route('/submit', methods=['POST'])
 def submit_code():
     code = request.form['code']
     qn = request.form['qn_num']
     submitted_time = request.form['submitted_time']
     time_taken = json.loads(request.form['time'])
+    lang = request.form['lang']
     print(time_taken, submitted_time, qn)
     print(code)
-    run = RunCCode(code)
-    rescompil, resrun = run.run_c_code()
-    for i in questions[int(qn)-1]['testcases']:
+    # run = RunCCode(code)
+    # rescompil, resrun = run.run_c_code()
+    testcases = questions[int(qn)-1]['testcases'] if lang == 'c' else questions_py[int(qn)-1]['testcases']
+    for i in testcases:
         print(i)
-        run = RunCCode(code, i['input'])
-        rescompil, resrun = run.run_c_code()
-        print(resrun)
+        if lang == 'c':
+            run = RunCCode(code, i['input'])
+            try:
+                rescompil, resrun = run.run_c_code()
+            except Exception as e:
+                print(e)
+                status = {'error': 1, 'err_desc': 'Compilation Error'}
+                return jsonify({'result': status})
+            print(resrun)
+        else:
+            run = RunPyCode(code, i['input'])
+            try:
+                rescompil, resrun = run.run_py_code()
+            except Exception as e:
+                print(e)
+                status = {'error': 1, 'err_desc': 'Compilation Error'}
+                return jsonify({'result': status})
+            print(resrun)
         if not resrun:
             status = {'error': 1, 'err_desc':'Compilation Error'}
             return jsonify({'result': status})
@@ -165,16 +328,16 @@ def submit_code():
     
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor(dictionary=True)
-    cursor.execute(f'select q{qn}_status from users where username = {session["username"]}')
+    cursor.execute(f'select q{qn}_status from users where username = "{session["username"]}"')
     if cursor.fetchone()[f'q{qn}_status'] == 1:
         status = {'error': 1, 'err_desc':'Already submitted'}
         return jsonify({'result': status})
     cursor.reset()
-    cursor.execute(f'update users set q{qn}_status = 1, total_score = total_score + {score} where username = {session["username"]}')
+    cursor.execute(f'update users set q{qn}_status = 1, total_score = total_score + {score} where username = "{session["username"]}"')
     
     cursor.reset()
     conn.commit()
-    query = (f"insert into q{qn} values ('{session['username']}', '{submitted_time}', '{time_taken}', {score}, '{code}')")
+    query = (f"insert into q{qn} values ('{session['username']}', '{submitted_time}', '{time_taken}', {score})")
     
     cursor.execute(query)
     cursor.reset()
@@ -194,28 +357,56 @@ def handle_message():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
+        name = request.form['name']
         username = request.form['username']
-        password = request.form['password']
+        phone = request.form['phone']
+        lang = request.form['lang']
 
         conn = mysql.connector.connect(**db_config)
         cursor = conn.cursor(dictionary=True)
+        
         cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         user = cursor.fetchone()
-        cursor.reset()
-        conn.close()
-        if user:
-            if password == user['password']:
-                session['username'] = user['username']
-                return redirect(url_for('show_index'))
 
-        return 'Invalid username or password'
+        if user:
+            print(user)
+            conn.close()
+            if lang == user['lang']:
+                session['username'] = user['username']
+                session['lang'] = user['lang']
+                if session['lang'] == 'c':
+                    return redirect(url_for('show_index'))
+                else:
+                    return redirect(url_for('show_index_py'))
+            else:
+                return f'Select {lang} as language & try again'
+        else:
+            try:
+                cursor.execute('INSERT INTO users (username, name, lang, phone) VALUES (%s, %s, %s, %s)',
+                            (username, name, lang, phone))
+                conn.commit()
+                conn.close()
+                session['username'] = username  # Set session username after successful insertion
+                session['lang'] = lang
+                if lang == 'c':
+                    return redirect(url_for('show_index'))
+                else:
+                    return redirect(url_for('show_index_py'))
+            except Exception as e:
+                # Handle specific exceptions like IntegrityError for duplicate usernames
+                return f'Something went wrong: {str(e)}'
+
+                    
+            
+            
+
     return render_template('login.html')
 
 @app.route('/admin140204*', methods=['GET', 'POST'])
 def admin():
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor(dictionary=True)
-    cursor.execute('SELECT username, name, password, total_score FROM users ORDER BY total_score DESC')
+    cursor.execute('SELECT username, name, phone, total_score FROM users ORDER BY total_score DESC')
     leader_board = cursor.fetchall()
     cursor.reset()
     submissions = []
@@ -234,7 +425,7 @@ def admin():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('show_index'))
+    return redirect(url_for('login'))
 
 
 

@@ -140,6 +140,7 @@ submit_btns.forEach((btn, index) => {
     formData.append("qn_num", index + 1);
     formData.append("submitted_time", new Date().toLocaleString());
     formData.append("time", JSON.stringify(timer_array[index].getTimeValues()));
+    formData.append("lang", window.location.pathname.split('/')[1]);
     btn.querySelector('#spinner').style = 'display: inline-block;'
     fetch('/submit', {
       method: 'POST',

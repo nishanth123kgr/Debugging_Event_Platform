@@ -6,31 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css')}}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon-32x32.png') }}" type="image/x-icon" />
-    <title>Debugging | Login</title>
+    <title>Debugging | Register</title>
 </head>
 <body>
         
     <form class="loginDiv" id="loginDiv" action="/login" method="post">
-        <img class="gdsc-logo" src="{{ url_for('static', filename='logo/gdsc-logo.png')}}" alt="GDSC-Logo" />
+        <img class="gdsc-logo" src="{{ url_for('static', filename='logo/icon.png')}}" alt="GDSC-Logo" />
         <!-- <img class="gdsc-logo" src="/Users/USER/Downloads/gdsc-logo.png" alt="GDSC-Logo" /> -->
         <div class="gdsc-title">
-            <div>Google Developer Students Club
+            <div>CognoConnect 2K24
             </div>
-            <div>Anna University Regional Campus Tirunelveli</div>
+            <div>AURCT</div>
             </div>
-        <h1>Login Now</h1>
+        <h1>Register</h1>
         <div class="inputField">
             <input type="text" id="username" name="username" required aria-invalid="false" />
             <label>Username</label>
         </div>
         <div class="inputField">
-            <input type="password" id="password" name="password" required aria-invalid="false"/>
-            <label>Password</label>
+            <input type="text" id="name" name="name" required aria-invalid="false" />
+            <label>Name</label>
+        </div>
+        <div class="inputField">
+            <input type="text" id="phone" name="phone" required aria-invalid="false" />
+            <label>Mobile Number</label>
+        </div>
+        <div class="inputField">
+            <select name="lang" id="lang">
+                <option value="">Select Language</option>
+                <option value="py">Python</option>
+                <option value="c">C</option>
+            </select>
         </div>
         <div class="error" aria-errormessage="Invalid username or password." id="error">
         <p>You have entered an invalid username or password.</p>
     </div>
-    <div class="log-btn"><button id="login" class="button-29">Login</button></div>
+    <div class="log-btn"><button id="login" class="button-29">Register</button></div>
         
 </form>
 

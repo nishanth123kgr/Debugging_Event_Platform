@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% import 'question.html' as question_macro %}
 
-{% block title %}Debugging | GDSC AURCT{% endblock %}
+{% block title %}Debugging | CognoConnect{% endblock %}
 
 {% block content %}
 <nav>
     <div class="gdsc-logo">
-        <img class="logo" src="{{ url_for('static', filename='logo/gdsc-logo.png')}}" alt="GDSC-Logo" />
+        <img class="logo" src="{{ url_for('static', filename='logo/icon.png')}}" alt="GDSC-Logo" />
         <div class="gdsc-title">
-          <div>Google Developers Student Clubs</div>
-          <div>Anna University Regional Campus Tirunelveli</div>
+          <div>CognoConnect</div>
+          <div>AURCT</div>
         </div>
       </div>
     
@@ -25,7 +25,7 @@
         <div class="user_name">{{ user.username }}</div>
       </div>
         <div class="user-profile">
-        <img class="profile" src="{{ url_for('static', filename='logo/gdsc-logo.png')}}" alt="User-Profile" />
+        <img class="profile" src="{{ url_for('static', filename='logo/icon.png')}}" alt="User-Profile" />
         </div>
     </div>
     

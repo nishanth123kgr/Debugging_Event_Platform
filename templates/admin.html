@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% import 'admin_components.html' as components %}
 
-{% block title %}Debugging | GDSC AURCT{% endblock %}
+{% block title %}Debugging | Cognoconnect{% endblock %}
 
 {%block custom_css%}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}" />
@@ -10,10 +10,10 @@
 {% block content %}
 <nav>
     <div class="gdsc-logo">
-        <img class="logo" src="{{ url_for('static', filename='logo/gdsc-logo.png')}}" alt="GDSC-Logo" />
+        <img class="logo" src="{{ url_for('static', filename='logo/icon.png')}}" alt="GDSC-Logo" />
         <div class="gdsc-title">
-          <div>Google Developers Student Clubs</div>
-          <div>Anna University Regional Campus Tirunelveli</div>
+          <div>Cognoconnect</div>
+          <div>AURCT</div>
         </div>
       </div>
     
@@ -21,10 +21,10 @@
       
         <div class="user">
         <div class="name" style="padding-bottom: 0;"><strong>Admin</strong></div>
-        <div class="user_name" style="font-size: 0.9rem;">GDSC</div>
+        <div class="user_name" style="font-size: 0.9rem;">AURCT</div>
       </div>
         <div class="user-profile">
-        <img class="profile" src="{{ url_for('static', filename='logo/gdsc-logo.png')}}" alt="User-Profile" />
+        <img class="profile" src="{{ url_for('static', filename='logo/icon.png')}}" alt="User-Profile" />
         </div>
     </div>
     
