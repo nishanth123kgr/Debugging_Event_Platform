@@ -2,6 +2,7 @@ import subprocess
 import sys
 import os
 from random import randint
+from threading import Timer
 
 
 class RunCCode(object):
@@ -24,7 +25,7 @@ class RunCCode(object):
 
     def _run_c_prog(self, cmd):
         p = subprocess.Popen([cmd]+self.arguments, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        result = p.wait()
+        result = p.wait(timeout=5)
         a, b = p.communicate()
         self.stdout, self.stderr = a.decode("utf-8"), b.decode("utf-8")
         return result
@@ -93,7 +94,7 @@ class RunPyCode(object):
     def _run_py_prog(self, cmd="a.py"):
         cmd = [sys.executable, cmd]
         p = subprocess.Popen(cmd+self.arguments, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        result = p.wait()
+        result = p.wait(timeout=5)
         a, b = p.communicate()
         self.stdout, self.stderr = a.decode("utf-8"), b.decode("utf-8")
         return result

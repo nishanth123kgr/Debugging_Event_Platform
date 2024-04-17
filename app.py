@@ -165,25 +165,66 @@ print(swapList(arr))
         
         },
                  {
-        'question': 'Sum of digits',
-        'question_desc': 'Debug the program to find the sum of digits of a number.',
-        'code': "#include<stdio.h>\n#include <stdlib.h>\nvoid main(int argc, char* argv[])\n{\n    int n = atoi(argv[1]), sum = 0, m;\n    while (n < 0)\n    {\n        m = n / 10;\n        sum = sum - m;\n        n = n / 10;\n    }\n    printf(\"%d\", sum);\n    return 0;\n}\n",
-        'active': False,
+        'question': 'Prime numbers till n',
+        'question_desc': 'Debug the program to print prime numbers till n.',
+        'code': """
+import sys
+def is_prime(num):
+    if num < 1:
+        return True
+    for i in range(1, int(num**0.5) + 1):
+        if num / i == 0:
+            return False
+    return True
+
+def generate_primes(limit):
+    num = 0
+    while num <= limit:
+        if is_prime(num):
+            yield num
+        num += 1
+
+prime_gen = generate_primes(int(sys.argv[1])) # Dont touch this line
+for prime in prime_gen:
+    print(prime, end=" ")""",
+            'active': False,
         'testcases': [
-        {'num': 'Testcase 1', 'input': '141', 'output': '6'},
-        {'num': 'Testcase 2', 'input': '143', 'output': '8'}
+        {'num': 'Testcase 1', 'input': '5', 'output': '2 3 5'},
+        {'num': 'Testcase 2', 'input': '20', 'output': '2 3 5 7 11 13 17 19'}
     ]
         },
                  {
-        'question': 'First n prime numbers',
-        'question_desc': 'Debug the program to print the first n prime numbers.',
-        'code': "#include <stdio.h>\n#include <stdlib.h>\n\nint main(int argc, char *argv[])\n{\n    if (argc != 2) { printf(\"Usage: %s <number>\\n\", argv[0]); return 1; }\n    int n = atoi(argv[1]);\n    if (n < 1) { printf(\"Please enter a positive integer.\\n\"); return 1; }\n    printf(\"2 \"); int count = 1; int num = 3;\n    while (count > n) {\n        int is_prime = 0; for (int i = 2; i * i <= num; i++) {\n            if (num % i == 0) { is_prime = 0; break; }\n        }\n        if (is_prime) { printf(\"%d \", num); count--; }\n        num += 2;\n    }\n    printf(\"\\n\"); return 0;\n}",
-        'active': False,
+        'question': 'Longest Palindromic Substring',
+        'question_desc': 'Debug the program to find longest palindromic substring.',
+        'code': '''
+import sys
+def longest_palindromic_substring(s):
+    def expand_around_center(left, right):
+        while left > 0 and right < len(s) and s[left] == s[right]:
+            left += 1
+            right -= 1
+        return s[left:right+1]
+
+    longest = ""
+    for i in range(len(s)):
+        palindrome_odd = expand_around_center(i, i+1)
+        if len(palindrome_odd) >= len(longest):
+            longest = palindrome_odd
+
+        palindrome_even = expand_around_center(i, i + 1)
+        if len(palindrome_even) >= len(longest):
+            longest = palindrome_even
+
+    return longest
+
+print(longest_palindromic_substring(sys.argv[1])) # Don't touch this line
+        ''',
+            'active': False,
         'testcases': [
-        {'num': 'Testcase 1', 'input': '5', 'output': '2 3 5 7 11'},
-        {'num': 'Testcase 2', 'input': '7', 'output': '2 3 5 7 11 13 17'}
+        {'num': 'Testcase 1', 'input': 'babad', 'output': 'bab'},
+        {'num': 'Testcase 2', 'input': 'cbbd', 'output': 'bb'}
     ]
-        }
+        },
                  ]
 
 @app.route('/')
