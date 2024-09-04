@@ -8,10 +8,10 @@ from flask_cors import CORS
 
 
 db_config = {
-    'host': 'localhost',
-    'user': 'root',
-    'database': 'debugging',
-    'auth_plugin' : 'mysql_native_password'
+    'host': 'sql12.freesqldatabase.com',
+    'user': 'sql12729369',
+    'database': 'sql12729369',
+    'password' : 'aflbzTw75J'
 }
 
 
@@ -26,12 +26,7 @@ socketio = SocketIO (
       async_mode="threading"
  )
 
-CORS(app, origins=[
-    "http://127.0.0.1:5000",
-    "http://localhost:5000",
-    "http://192.168.82.8:5000",
-    # Add more origins as needed
-]) 
+CORS(app, origins="*") 
 
 app.secret_key = '875dee07a28e825074bff0e1b7da9564e107c4e3e5b809cb'
 

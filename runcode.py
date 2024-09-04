@@ -6,7 +6,7 @@ from threading import Timer
 
 
 class RunCCode(object):
-    
+
     def __init__(self, code=None, arguments=""):
         self.unique = randint(10001, 99999)
         self.code = code
@@ -14,7 +14,7 @@ class RunCCode(object):
         self.compiler = "gcc"
         if not os.path.exists('running'):
             os.mkdir('running')
-    
+
     def _compile_c_code(self, filename, prog):
         cmd = [self.compiler, filename, "-Wall", "-o", prog]
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -24,12 +24,12 @@ class RunCCode(object):
         return result
 
     def _run_c_prog(self, cmd):
-        p = subprocess.Popen([cmd]+self.arguments, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        result = p.wait(timeout=5)
+        p = subprocess.Popen([cmd] + self.arguments, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        result = p.wait(timeout=10)
         a, b = p.communicate()
         self.stdout, self.stderr = a.decode("utf-8"), b.decode("utf-8")
         return result
-    
+
     def run_c_code(self, code=None):
         filename = f"./running/test{self.unique}.c"
         if not code:
@@ -42,6 +42,10 @@ class RunCCode(object):
         if res == 0:
             self._run_c_prog(f"./running/a{self.unique}.out")
             result_run = self.stdout + self.stderr
+        if os.path.exists(filename):
+            os.remove(filename)
+        if os.path.exists(f"./running/a{self.unique}.out"):
+            os.remove(f"./running/a{self.unique}.out")
         return result_compilation, result_run
 
 
@@ -82,8 +86,9 @@ class RunCppCode(object):
             result_run = self.stdout + self.stderr
         return result_compilation, result_run
 
+
 class RunPyCode(object):
-    
+
     def __init__(self, code=None, arguments=""):
         self.unique = randint(10001, 99999)
         self.code = code
@@ -93,12 +98,12 @@ class RunPyCode(object):
 
     def _run_py_prog(self, cmd="a.py"):
         cmd = [sys.executable, cmd]
-        p = subprocess.Popen(cmd+self.arguments, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        result = p.wait(timeout=5)
+        p = subprocess.Popen(cmd + self.arguments, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        result = p.wait(timeout=10)
         a, b = p.communicate()
         self.stdout, self.stderr = a.decode("utf-8"), b.decode("utf-8")
         return result
-    
+
     def run_py_code(self, code=None):
         filename = f"./running/a{self.unique}.py"
         if not code:
@@ -106,4 +111,6 @@ class RunPyCode(object):
         with open(filename, "w") as f:
             f.write(code)
         self._run_py_prog(filename)
+        if os.path.exists(filename):
+            os.remove(filename)
         return self.stderr, self.stdout
