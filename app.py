@@ -468,4 +468,4 @@ def logout():
 
 
 if __name__ == '__main__':
-    socketio.run(app, allow_unsafe_werkzeug=True, port=5000, debug=True, host='0.0.0.0')
+    socketio.run(app, allow_unsafe_werkzeug=True, port=os.environ.get("PORT"), debug=True, host='0.0.0.0')
