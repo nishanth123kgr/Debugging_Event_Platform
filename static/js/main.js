@@ -179,25 +179,33 @@ submit_btns.forEach((btn, index) => {
 }
 );
 
+async function get_default_code(qn_num, editor){
+  await fetch(`code${document.location.pathname}/${qn_num}`).then(data=>
+    data.json().then((response)=>{
+      editor.setValue(response.code)
+    })
+  ).catch((error)=>alert("Something's gone wrong!!"+error))
+  
+}
 
 q1_reset.addEventListener("click", function () {
-  editor1.setValue(default_codes[0]);
+  get_default_code(1, editor1)
 });
 
 q2_reset.addEventListener("click", function () {
-  editor2.setValue(default_codes[1]);
+  get_default_code(2, editor2)
 });
 
 q3_reset.addEventListener("click", function () {
-  editor3.setValue(default_codes[2]);
+  get_default_code(3, editor3)
 });
 
 q4_reset.addEventListener("click", function () {
-  editor4.setValue(default_codes[3]);
+  get_default_code(4, editor4)
 });
 
 q5_reset.addEventListener("click", function () {
-  editor5.setValue(default_codes[4]);
+  get_default_code(5, editor5)
 });
 
 
