@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template, request, jsonify, session, url_for, redirect
 from flask_socketio import SocketIO
 from runcode import RunCCode, RunPyCode
@@ -7,15 +9,21 @@ import mysql.connector
 from flask_cors import CORS
 
 
+# db_config = {
+#     'host': 'sql12.freesqldatabase.com',
+#     'user': 'sql12729369',
+#     'database': 'sql12729369',
+#     'password' : 'aflbzTw75J'
+# }
+
 db_config = {
-    'host': 'sql12.freesqldatabase.com',
-    'user': 'sql12729369',
-    'database': 'sql12729369',
-    'password' : 'aflbzTw75J'
+    'host': 'localhost',
+    'user': 'root',
+    'database': 'debugging'
 }
 
 
-qn_points = [10, 10, 20, 20, 30]
+qn_points = [10, 10, 10, 10, 10]
 
 
 
@@ -33,192 +41,117 @@ app.secret_key = '875dee07a28e825074bff0e1b7da9564e107c4e3e5b809cb'
 questions = [{
         'question': 'Debug the code',
         'question_desc': 'The code is not working as expected. Find the bug and fix it.',
-        'code': '#include <stdio.h>\nvoid main(int argc, char* argv[]) {\n\tprintf("Hello %c!, argv[1]);\n\treturn 0;\n}',
+        'code': 'int factorial(int n) {\n\tif (n == 1)\n\t\treturn 0;\n\telse\n\t\treturn n * factorial(n - 1);\n}',
         'active': True,
         'testcases': [
-        {'num': 'Testcase 1', 'input': 'There', 'output': 'Hello There!'},
-        {'num': 'Testcase 2', 'input': 'World', 'output': 'Hello World!'}
-    ],
+        {'num': 'Testcase 1', 'input': '5', 'output': '120'},
+        {'num': 'Testcase 2', 'input': '4', 'output': '24'},
+        ],
+        'drive_code':'#include <stdio.h>\n#include <stdlib.h>\nint factorial(int);\n\nint main(int argc, char *argv[]) {\n\tif (argc != 2) {\n\t\tprintf("Usage: %s <number>", argv[0]);\n\t\treturn 1;\n\t}\n\n\tint num = atoi(argv[1]);\n\tprintf("%d", factorial(num));\n\treturn 0;\n}\n\n'
+    
     },
                  {
-        'question': 'Add two numbers',
-        'question_desc': 'Debug the program to add two numbers.',
-        'code': "#include <stdio.h>\n\t#include <stdlib.h>\n\n\tint main(int argc, char* argv[]) {\n\t\tif (argc != 3) {\n\t\t\tprintf(\"Usage: %s <number1> <number2>\\n\", argv[0]);\n\t\t\treturn 1; // Return an error code\n\t\t}\n\n\t\tint num1 = atoi(argv[1];\n\t\tint num2 = ati(argv[2]);\n\n\t\tprintf(\"%d\\n\", num1 % num2);\n\n\t\treturn 0;\n\t}\n",
+        'question': 'Find GCD or HCF of two numbers',
+        'question_desc': 'Debug the program to find gcd.',
+        'code': 'int gcd(int a, int b) {\n\tif (a == 0)\n\t\treturn b;\n\telse\n\t\treturn gcd(a, b / a);\n}\n\n',
         'active': False,
         'testcases': [
-        {'num': 'Testcase 1', 'input': '3 5', 'output': '8'},
-        {'num': 'Testcase 2', 'input': '7 2', 'output': '9'}
-    ]
+        {'num': 'Testcase 1', 'input': '20 28', 'output': '4'},
+        {'num': 'Testcase 2', 'input': '60 36', 'output': '12'}
+    ],
+        'drive_code':'#include <stdio.h>\n#include <stdlib.h>\n\nint main(int argc, char *argv[]) {\n\tif (argc != 3) {\n\t\tprintf("Usage: %s <number1> <number2>\\n", argv[0]);\n\t\treturn 1;\n\t}\n\n\tint num1 = atoi(argv[1]);\n\tint num2 = atoi(argv[2]);\n\n\tprintf("%d", gcd(num1, num2));\n\treturn 0;\n}'
         },
                  {
-        'question': 'Palindrome or not?',
-        'question_desc': 'Debug the program to check if a number is a palindrome or not.',
-        'code': "#include <stdio.h>\n#include <stdlib.h>\nint main(int argc, char* argv[]) {\n\tint n= atoi(argv[1]), reversed = 0, remainder, original = n;\n\toriginal = 0;\n\n\twhile (n != 0) {\n\t\tremainder = n / 10;\n\t\treversed = reversed * 10 + remainder;\n\t\tn %= 10;\n\t}\n\n\tif (original =! reversed)\n\t\tprintf(\"%d is a palindrome.\", original);\n\telse\n\t\tprintf(\"%d is not a palindrome.\", original);\n\n\treturn 0;\n}\n",
+        'question': 'Sum of Array',
+        'question_desc': 'Debug the program to find the sum of array.',
+        'code': 'int sum_array(int arr[], int n) {\n\tint sum = 1;\n\tfor (int i = 1; i <= n; ++i)\n\t\tsum = arr[i]\n\treturn sum\n}',
         'active': False,
         'testcases': [
-        {'num': 'Testcase 1', 'input': '141', 'output': '141 is a palindrome.'},
-        {'num': 'Testcase 2', 'input': '145', 'output': '145 is not a palindrome.'}
+        {'num': 'Testcase 1', 'input': '1 2 3 4 5', 'output': '15'},
+        {'num': 'Testcase 2', 'input': '6 84 13 29 45', 'output': '177'}
     ],
+        'drive_code':'#include <stdio.h>\n#include <stdlib.h>\n\nint main(int argc, char *argv[]) {\n\tint n = argc - 1;\n\tif (n == 0) {\n\t\tprintf("Usage: %s <num1> <num2> ... <numN>\\n", argv[0]);\n\t\treturn 1;\n\t}\n\n\tint arr[n];\n\tfor (int i = 0; i < n; i++) {\n\t\tarr[i] = atoi(argv[i + 1]);\n\t}\n\n\tprintf("%d", sum_array(arr, n));\n\treturn 0;\n}'
         
         },
                  {
-        'question': 'Sum of digits',
-        'question_desc': 'Debug the program to find the sum of digits of a number.',
-        'code': "#include<stdio.h>\n#include <stdlib.h>\nvoid main(int argc, char* argv[])\n{\n    int n = atoi(argv[1]), sum = 0, m;\n    while (n < 0)\n    {\n        m = n / 10;\n        sum = sum - m;\n        n = n / 10;\n    }\n    printf(\"%d\", sum);\n    return 0;\n}\n",
+        'question': 'Is Prime?',
+        'question_desc': 'Debug the program to check a number is prime. The function "is_prime" returns 1 if the number is prime else it returns 0',
+        'code': 'int is_prime(int n) {\n\tif (n >= 1)\n\t\treturn 0;\n\tfor (int i = 1; i < n; i++) {\n\t\tif (i % n == 1)\n\t\t\treturn 0;\n\t}\n\treturn -1\n}',
         'active': False,
         'testcases': [
-        {'num': 'Testcase 1', 'input': '141', 'output': '6'},
-        {'num': 'Testcase 2', 'input': '143', 'output': '8'}
-    ]
+        {'num': 'Testcase 1', 'input': '12', 'output': '0'},
+        {'num': 'Testcase 2', 'input': '11', 'output': '1'}
+    ],
+        'drive_code': '#include <stdio.h>\n#include <stdlib.h>\n\nint main(int argc, char *argv[]) {\n\tif (argc != 2) {\n\t\tprintf("Usage: %s <number>\\n", argv[0]);\n\t\treturn 1;\n\t}\n\n\tint num = atoi(argv[1]);\n\tprintf("%d", is_prime(num));\n\n\treturn 0;\n}'
         },
                  {
-        'question': 'First n prime numbers',
-        'question_desc': 'Debug the program to print the first n prime numbers.',
-        'code': "#include <stdio.h>\n#include <stdlib.h>\n\nint main(int argc, char *argv[])\n{\n    if (argc != 2) { printf(\"Usage: %s <number>\\n\", argv[0]); return 1; }\n    int n = atoi(argv[1]);\n    if (n < 1) { printf(\"Please enter a positive integer.\\n\"); return 1; }\n    printf(\"2 \"); int count = 1; int num = 3;\n    while (count > n) {\n        int is_prime = 0; for (int i = 2; i * i <= num; i++) {\n            if (num % i == 0) { is_prime = 0; break; }\n        }\n        if (is_prime) { printf(\"%d \", num); count--; }\n        num += 2;\n    }\n    printf(\"\\n\"); return 0;\n}",
+        'question': 'Find largest number in an array.',
+        'question_desc': 'Debug the program to find the largest number.',
+        'code': 'int find_largest(int arr[], int n) {\n\tint max = arr[1];\n\tfor (int i = n; i > 0; i--) {\n\t\tif (arr[i] < max)\n\t\t\tarr[i] = max;\n\t}\n\treturn max;\n}',
         'active': False,
         'testcases': [
-        {'num': 'Testcase 1', 'input': '5', 'output': '2 3 5 7 11'},
-        {'num': 'Testcase 2', 'input': '7', 'output': '2 3 5 7 11 13 17'}
-    ]
+        {'num': 'Testcase 1', 'input': '6 84 13 29 45 ', 'output': '84'},
+        {'num': 'Testcase 2', 'input': '7 47 18 64 24', 'output': '64'}
+    ],
+        'drive_code':'#include <stdio.h>\n#include <stdlib.h>\n\nint main(int argc, char *argv[]) {\n\tint n = argc - 1;\n\tif (n == 0) {\n\t\tprintf("Usage: %s <num1> <num2> ... <numN>\\n", argv[0]);\n\t\treturn 1;\n\t}\n\n\tint arr[n];\n\tfor (int i = 0; i < n; i++) {\n\t\tarr[i] = atoi(argv[i + 1]);\n\t}\n\n\tprintf("%d", find_largest(arr, n));\n\treturn 0;\n}'
         }
                  ]
 
 questions_py = [{
-        'question': 'Sum of Array Elements',
+        'question': 'Count Word Frequency',
         'question_desc': 'The code is not working as expected. Find the bug and fix it.',
-        'code': '''
-import sys
-arr = [int(i) for i in sys.argv[1:]] # Dont change this line
- 
-ans = 1
-for i in arr:
-    ans=+i
- 
-# display sum
-print(ans, 5)
-
-        ''',
+        'code': 'def count_word_frequency(sentence):\n\twords = sentence.upper().split(",")\n\tword_count = {}\n\tfor word in words:\n\t\tif word not in word_count:\n\t\t\tword_count[word] += 1\n\t\telse:\n\t\t\tword_count[word] = 2\n\treturn word_count',
         'active': True,
         'testcases': [
-        {'num': 'Testcase 1', 'input': '1 2 4', 'output': '7'},
-        {'num': 'Testcase 2', 'input': '7 3 7 4 6', 'output': '27'}
+        {'num': 'Testcase 1', 'input': 'Hello this is a friend', 'output': "{'hello': 1, 'this': 1, 'is': 1, 'a': 1, 'friend': 1}"},
+        {'num': 'Testcase 2', 'input': 'IF U KNOW, U KNOW AND THATS Y NO ONE KNOW', 'output': "{'if': 1, 'u': 2, 'know,': 1, 'know': 2, 'and': 1, 'thats': 1, 'y': 1, 'no': 1, 'one': 1}"}
     ],
+        'drive_code':'import sys\nprint(count_word_frequency(" ".join(sys.argv[1:])))'
     },
                  {
-        'question': 'Simple Interest',
-        'question_desc': 'Debug the program to find simple interest.',
-        'code': '''
-import sys
-
-# Modify the code in the below function
-def simple_interest(p,r,t):
-
-     
-    si = (p * t + r/100)
-     
-    rturn is
-    
-    
-# Dont Touch the below code
-p = int(sys.argv[1])
-t = int(sys.argv[2])
-r = int(sys.argv[3])
-
-print(simple_interest(p, t, r))
-        ''',
+        'question': 'Remove Duplicates from the list',
+        'question_desc': 'Debug the program to remove duplicates.',
+        'code': 'def remove_duplicates(numbers):\n\tseen = list()\n\tresult = []\n\tfor num in numbers:\n\t\tif num in seen:\n\t\t\tseen.append(num)\n\t\t\tresult.insert(0, num)\n\treturn result',
             'active': False,
         'testcases': [
-        {'num': 'Testcase 1', 'input': '10000 5 5', 'output': '2500.0'},
-        {'num': 'Testcase 2', 'input': '12000 3 4', 'output': '1440.0'}
-    ]
+        {'num': 'Testcase 1', 'input': '1 2 2 2 3 4 3 7 7 5 7', 'output': "['1', '2', '3', '4', '7', '5']"},
+        {'num': 'Testcase 2', 'input': '6 4 9 5 7 9 4 6 5', 'output': "['6', '4', '9', '5', '7']"}
+    ],
+        'drive_code':"import sys\nprint(remove_duplicates(sys.argv[1:]))"
         },
                  {
-        'question': 'Swap first and last element',
-        'question_desc': 'Debug the program to swap the first and last element of a list.',
-        'code': '''
-import sys
-arr = [int(x) for x in sys.argv[1:]] # Don't change this line
-
-def swapList(newList):
-    size_ = len(newList)
-     
-    # Swapping 
-    temp = newList[0]
-    newList[0] += newList[size]
-    newList[size+2] = temp
-     
-    return newL1st
-     
- 
-print(swapList(arr))
-        ''',
+        'question': 'Convert Temperatures',
+        'question_desc': 'Debug the program to convert fahrenheit to celsius and vice versa.',
+        'code': "def convert_temperature(temp, unit):\n\tif unit == 'C':\n\t\tfahrenheit = temp / 9*5 + 32\n\t\treturn round(fahrenheit, 1)\n\telif unit == 'F':\n\t\tcelsius = (temp + 32) * 5/9\n\t\treturn round(celsius, 2)\n\treturn None",
         'active': False,
         'testcases': [
-        {'num': 'Testcase 1', 'input': '1 2 3 4 5', 'output': '[5, 2, 3, 4, 1]'},
-        {'num': 'Testcase 2', 'input': '9 5 7 3 1 6 4 8', 'output': '[8, 5, 7, 3, 1, 6, 4, 9]'}
+        {'num': 'Testcase 1', 'input': '40 F', 'output': '4.4'},
+        {'num': 'Testcase 2', 'input': '33 C', 'output': '91.4'}
     ],
+        'drive_code':"import sys\nprint(convert_temperature(int(sys.argv[1]), sys.argv[2]))"
         
         },
                  {
-        'question': 'Prime numbers till n',
-        'question_desc': 'Debug the program to print prime numbers till n.',
-        'code': """
-import sys
-def is_prime(num):
-    if num < 1:
-        return True
-    for i in range(1, int(num**0.5) + 1):
-        if num / i == 0:
-            return False
-    return True
-
-def generate_primes(limit):
-    num = 0
-    while num <= limit:
-        if is_prime(num):
-            yield num
-        num += 1
-
-prime_gen = generate_primes(int(sys.argv[1])) # Dont touch this line
-for prime in prime_gen:
-    print(prime, end=" ")""",
-            'active': False,
+        'question': 'Is Valid Email',
+        'question_desc': 'Debug the program to check whether the given mail id is in correct format.',
+        'code': "def is_valid_email(email):\n\tif email or ' ' in email:\n\t\treturn False\n\tparts = email.split('@')\n\tif len(parts) != 3 or not parts[0] or not parts[1]:\n\t\treturn False\n\tdomain = parts[0]\n\treturn '.' in domain and domain.rfind('.') < len(domain) - 1",
+        'active': False,
         'testcases': [
-        {'num': 'Testcase 1', 'input': '5', 'output': '2 3 5'},
-        {'num': 'Testcase 2', 'input': '20', 'output': '2 3 5 7 11 13 17 19'}
-    ]
+        {'num': 'Testcase 1', 'input': 'helloworld@hi.com', 'output': 'True'},
+        {'num': 'Testcase 2', 'input': 'hello@world@hi', 'output': 'False'}
+    ],
+        'drive_code': 'import sys\nprint(is_valid_email(sys.argv[1]))'
         },
                  {
-        'question': 'Longest Palindromic Substring',
-        'question_desc': 'Debug the program to find longest palindromic substring.',
-        'code': '''
-import sys
-def longest_palindromic_substring(s):
-    def expand_around_center(left, right):
-        while left > 0 and right < len(s) and s[left] == s[right]:
-            left += 1
-            right -= 1
-        return s[left:right+1]
-
-    longest = ""
-    for i in range(len(s)):
-        palindrome_odd = expand_around_center(i, i+1)
-        if len(palindrome_odd) >= len(longest):
-            longest = palindrome_odd
-
-        palindrome_even = expand_around_center(i, i + 1)
-        if len(palindrome_even) >= len(longest):
-            longest = palindrome_even
-
-    return longest
-
-print(longest_palindromic_substring(sys.argv[1])) # Don't touch this line
-        ''',
+        'question': 'Format Number',
+        'question_desc': 'Debug the program to format a given number with comma separation.',
+        'code': "def format_number(number):\n\tnum_str = str(abs(number))\n\tresult = '-'\n\tfor i, digit in enumerate(reversed(num_str)):\n\t\tif i > 0 and i % 3 == 0:\n\t\t\tresult = ',,' + result\n\t\tresult = digit + result\n\tif number > 0:\n\t\tresult = '-' + result\n\treturn result",
             'active': False,
         'testcases': [
-        {'num': 'Testcase 1', 'input': 'babad', 'output': 'bab'},
-        {'num': 'Testcase 2', 'input': 'cbbd', 'output': 'bb'}
-    ]
+        {'num': 'Testcase 1', 'input': '2414124121', 'output': '2,414,124,121'},
+        {'num': 'Testcase 2', 'input': '-32984', 'output': '-32,984'}
+    ],
+        'drive_code':'import sys\nprint(format_number(int(sys.argv[1])))'
         },
                  ]
 
@@ -264,7 +197,7 @@ def show_index():
             resrun = 'No result!'
     else:
         pass
-    return render_template('index.html', user=user_details, questions=questions, codes=codes)
+    return render_template('index.html', user=user_details, questions=questions, codes=[])
 
 @app.route('/py', methods=['GET', 'POST'])
 def show_index_py():
@@ -303,7 +236,7 @@ def show_index_py():
             resrun = 'No result!'
     else:
         pass
-    return render_template('index.html', user=user_details, questions=questions_py, codes=codes)
+    return render_template('index.html', user=user_details, questions=questions_py, codes=[])
 
 @app.route('/submit', methods=['POST'])
 def submit_code():
@@ -313,13 +246,18 @@ def submit_code():
     time_taken = json.loads(request.form['time'])
     lang = request.form['lang']
     print(time_taken, submitted_time, qn)
-    print(code)
     # run = RunCCode(code)
     # rescompil, resrun = run.run_c_code()
     testcases = questions[int(qn)-1]['testcases'] if lang == 'c' else questions_py[int(qn)-1]['testcases']
+    if lang == 'c':
+        code = questions[int(qn)-1]['drive_code'] + '\n' + code
+    else:
+        code = code + '\n' + questions_py[int(qn)-1]['drive_code']
+    print(code)
     for i in testcases:
         print(i)
         if lang == 'c':
+            
             run = RunCCode(code, i['input'])
             try:
                 rescompil, resrun = run.run_c_code()
@@ -338,12 +276,12 @@ def submit_code():
                 return jsonify({'result': status})
             print(resrun)
         if not resrun:
-            status = {'error': 1, 'err_desc':'Compilation Error'}
+            status = {'error': 2, 'err_desc':'Compilation Error'}
             return jsonify({'result': status})
         if resrun.strip() == i['output']:
             print('Correct')
         else:
-            status = {'error': 1, 'err_desc':'Runtime Error'}
+            status = {'error': 1, 'err_desc':f"Your Output:\n\n{resrun.strip()}\n\nExpected Output:\n\n{i['output']}"}
             return jsonify({'result': status})
     print(resrun)
     status = {'error': 0, 'output': resrun}
@@ -468,4 +406,4 @@ def logout():
 
 
 if __name__ == '__main__':
-    socketio.run(app, allow_unsafe_werkzeug=True, port=5000, debug=True, host='0.0.0.0')
+    socketio.run(app, allow_unsafe_werkzeug=True, port=os.environ.get("PORT"), debug=True, host='0.0.0.0')

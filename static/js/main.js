@@ -147,6 +147,8 @@ submit_btns.forEach((btn, index) => {
       body: formData
     }).then(response => response.json())
       .then(data => {
+        console.log(data);
+        console.log(data.result.err_desc.startsWith('Comp'))
         if (data.result.error == 0) {
           Swal.fire({
             title: "Submitted Successfully!",
@@ -155,11 +157,21 @@ submit_btns.forEach((btn, index) => {
           });
           document.querySelector(`#q${index + 1}_solved`).style = 'display: inline-flex;'
 
-        } else {
+        } 
+        
+        else if (data.result.error == 1){
+          
           Swal.fire({
             icon: "error",
-            title: "Oops...",
-            text: data.result.err_desc,
+            title: "Oops... Runtime Error",
+            html: data.result.err_desc.replace(/\n/g, "<br>")
+          });
+        }
+        
+        else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops... Compilation Error",
           });
         }
         btn.querySelector('#spinner').style = 'display: none;'
