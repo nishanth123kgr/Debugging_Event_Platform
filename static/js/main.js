@@ -148,7 +148,6 @@ submit_btns.forEach((btn, index) => {
     }).then(response => response.json())
       .then(data => {
         console.log(data);
-        console.log(data.result.err_desc.startsWith('Comp'))
         if (data.result.error == 0) {
           Swal.fire({
             title: "Submitted Successfully!",
