@@ -22,6 +22,8 @@ let editor_array = [editor1, editor2, editor3, editor4, editor5];
 
 let qn_timer_status = [true, false, false, false, false];
 
+const startButton = document.querySelector("#startButton");
+
 let q1_btn = document.getElementById("q1_btn");
 let q2_btn = document.getElementById("q2_btn");
 let q3_btn = document.getElementById("q3_btn");
@@ -42,11 +44,7 @@ let q5_timer = new easytimer.Timer();
 
 let timer_array = [q1_timer, q2_timer, q3_timer, q4_timer, q5_timer];
 
-if (localStorage.getItem(`#q1_timer`)) {
-  q1_timer.start({ startValues: JSON.parse(localStorage.getItem(`#q1_timer`)) });
-} else {
-  q1_timer.start({ precision: 'seconds', target: { hours: 1 } });
-}
+
 
 
 
@@ -156,17 +154,17 @@ submit_btns.forEach((btn, index) => {
           });
           document.querySelector(`#q${index + 1}_solved`).style = 'display: inline-flex;'
 
-        } 
-        
-        else if (data.result.error == 1){
-          
+        }
+
+        else if (data.result.error == 1) {
+
           Swal.fire({
             icon: "error",
             title: "Oops... Runtime Error",
             html: data.result.err_desc.replace(/\n/g, "<br>")
           });
         }
-        
+
         else {
           Swal.fire({
             icon: "error",
@@ -179,13 +177,13 @@ submit_btns.forEach((btn, index) => {
 }
 );
 
-async function get_default_code(qn_num, editor){
-  await fetch(`code${document.location.pathname}/${qn_num}`).then(data=>
-    data.json().then((response)=>{
+async function get_default_code(qn_num, editor) {
+  await fetch(`code${document.location.pathname}/${qn_num}`).then(data =>
+    data.json().then((response) => {
       editor.setValue(response.code)
     })
-  ).catch((error)=>alert("Something's gone wrong!!"+error))
-  
+  ).catch((error) => alert("Something's gone wrong!!" + error))
+
 }
 
 q1_reset.addEventListener("click", function () {
@@ -230,6 +228,62 @@ timer.addEventListener('targetAchieved', function (e) {
   window.location.href = '/logout';
 });
 
+function goFullscreen() {
+  const elem = document.documentElement;
+  console.log("invoked")
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { // Safari
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { // IE11
+    elem.msRequestFullscreen();
+  }
+}
+
+console.log("localStorage", localStorage.getItem('#isStarted'));
+
+
+if(localStorage.getItem('#isStarted') == 'true'){
+  enableStartButton();
+}
+
+
+const socket = io();
+
+
+
+startButton.addEventListener("click", function () {
+
+  console.log("startButton clicked");
+  
+
+  fetch('/isStarted').then(response => response.json())
+    .then(data => {
+      console.log(data);
+      if (data.isStarted) {
+        goFullscreen();
+        if (localStorage.getItem(`#q1_timer`)) {
+          q1_timer.start({ startValues: JSON.parse(localStorage.getItem(`#q1_timer`)) });
+        } else {
+          q1_timer.start({ precision: 'seconds', target: { hours: 1 } });
+        }
+        localStorage.setItem('#isStarted', true);
+      }
+    });
+
+});
+
+function enableStartButton() {
+  startButton.disabled = false;
+  startButton.innerHTML = "Start";
+
+
+}
+
+socket.on('startEvent', () => {
+  console.log('startEvent received');
+  enableStartButton();
+})
 
 
 

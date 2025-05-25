@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% import 'admin_components.html' as components %}
 
-{% block title %}Debugging | Tech Society{% endblock %}
+{% block title %}Debugging | TechBlitz{% endblock %}
 
 {%block custom_css%}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}" />
@@ -9,44 +9,48 @@
 
 {% block content %}
 <nav>
-    <div class="gdsc-logo">
-        <img class="logo" src="{{ url_for('static', filename='logo/icon.png')}}" alt="GDSC-Logo" />
-        <div class="gdsc-title">
-          <div>Tech Society</div>
-          <div>Department of CSE</div>
-        </div>
-      </div>
-    
-    <div class="user_details">
-      
-        <div class="user">
-        <div class="name" style="padding-bottom: 0;"><strong>Admin</strong></div>
-        <div class="user_name" style="font-size: 0.9rem;">Department of CSE</div>
-      </div>
-        <div class="user-profile">
-        <img class="profile" src="{{ url_for('static', filename='logo/icon.png')}}" alt="User-Profile" />
-        </div>
+  <div class="gdsc-logo">
+    <img class="logo" src="{{ url_for('static', filename='logo/icon.png')}}" alt="GDSC-Logo" />
+    <div class="gdsc-title">
+      <div>TechBlitz</div>
+      <div>Department of CSE</div>
     </div>
-    
+  </div>
+
+  <button class="start-button" id="startButton" style="margin: 0;" onclick="startEvent(this)">Start</button>
+
+  <div class="user_details">
+
+    <div class="user">
+      <div class="name" style="padding-bottom: 0;"><strong>Admin</strong></div>
+      <div class="user_name" style="font-size: 0.9rem;">Department of CSE</div>
+    </div>
+    <div class="user-profile">
+      <img class="profile" src="{{ url_for('static', filename='logo/icon.png')}}" alt="User-Profile" />
+    </div>
+  </div>
+
 </nav>
-<div class="question_tab_container"><div class="questions">
+<div class="question_tab_container">
+  <div class="questions">
     {{ components.question_tab('q1', 'Leader Board', active=true) }}
     {{ components.question_tab('q2', 'Q1 Submissions') }}
     {{ components.question_tab('q3', 'Q2 Submissions') }}
     {{ components.question_tab('q4', 'Q3 Submissions') }}
     {{ components.question_tab('q5', 'Q4 Submissions') }}
     {{ components.question_tab('q6', 'Q5 Submissions') }}
-      </div></div>
+  </div>
+</div>
 
-      {{ components.leader_board('q1', leader_board_data, active=true) }}
+{{ components.leader_board('q1', leader_board_data, active=true) }}
 
-      {% for submission in submissions %}
-      {% set q_id = 'q' ~ (loop.index+1) %}
-      {{ components.question_container(q_id, submission) }}
-      {% endfor %}
+{% for submission in submissions %}
+{% set q_id = 'q' ~ (loop.index+1) %}
+{{ components.question_container(q_id, submission) }}
+{% endfor %}
 
 
-      
+
 
 
 {% endblock %}

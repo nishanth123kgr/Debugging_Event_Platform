@@ -58,3 +58,16 @@ socket.on('connect', () => {
 socket.on('refresh_admin', () => {
     location.reload();
 });
+
+
+function startEvent(button) {
+    fetch('/startevent')
+        .then(response => {
+            if (response.ok) {
+                button.innerText = "Started";
+            } else {
+                console.log(`Error: ${response.status}`);
+            }
+        })
+        .catch(error => console.log(error));
+}

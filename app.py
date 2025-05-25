@@ -26,6 +26,8 @@ db_config = {
 
 qn_points = [10, 10, 10, 10, 10]
 
+isEventStarted = False
+
 
 
 
@@ -203,7 +205,7 @@ def show_index():
 @app.route('/py', methods=['GET', 'POST'])
 def show_index_py():
     if session['lang'] != 'py':
-        return "Please choose C as language and try again!!"
+        return "Please choose Python as language and try again!!"
     
     if 'username' not in session:
         return redirect(url_for('login'))
@@ -352,7 +354,7 @@ def login():
                 else:
                     return redirect(url_for('show_index_py'))
             else:
-                return f'Select {lang} as language & try again'
+                return f'Select {"Python" if user['lang'] == 'py' else "C"} as language & try again'
         else:
             try:
                 cursor.execute('INSERT INTO users (username, name, lang, phone) VALUES (%s, %s, %s, %s)',
@@ -399,6 +401,17 @@ def admin():
 def logout():
     session.clear()
     return redirect(url_for('login'))
+
+@app.route('/startevent')
+def startEvent():
+    socketio.emit('startEvent')
+    global isEventStarted
+    isEventStarted = True
+    return {"message":"success"}
+
+@app.route('/isStarted')
+def isStarted():
+    return {"isStarted": isEventStarted}
 
 
 
