@@ -48,7 +48,7 @@ socketio = SocketIO (
 
 CORS(app, origins="*") 
 
-app.secret_key = '875dee07a28e825074bff0e1b7da9564e107c4e3e5b809cb'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', '875dee07a28e825074bff0e1b7da9564e107c4e3e5b809cb')
 
 questions = [{
         'question': 'Debug the code',
@@ -427,4 +427,6 @@ def isStarted():
 
 
 if __name__ == '__main__':
-    socketio.run(app, allow_unsafe_werkzeug=True, port=os.environ.get("PORT"), debug=True, host='0.0.0.0')
+    port = int(os.environ.get("PORT", 5000))
+    debug = os.environ.get("FLASK_ENV") != "production"
+    socketio.run(app, allow_unsafe_werkzeug=True, port=port, debug=debug, host='0.0.0.0')
