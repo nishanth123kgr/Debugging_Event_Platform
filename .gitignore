@@ -4,3 +4,6 @@ running
 *.c
 .idea
 .vscode
+.env
+.env.local
+__pycache__/

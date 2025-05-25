@@ -1,4 +1,8 @@
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 from flask import Flask, render_template, request, jsonify, session, url_for, redirect
 from flask_socketio import SocketIO
@@ -10,18 +14,23 @@ from flask_cors import CORS
 import os
 
 
-# db_config = {
-#     'host': 'sql12.freesqldatabase.com',
-#     'user': 'sql12729369',
-#     'database': 'sql12729369',
-#     'password' : 'aflbzTw75J'
-# }
-
+# Database configuration - use environment variables for production
 db_config = {
-    'host': 'localhost',
-    'user': 'root',
-    'database': 'debugging'
+    'host': os.getenv('DB_HOST', 'localhost'),
+    'user': os.getenv('DB_USER', 'root'),
+    'password': os.getenv('DB_PASSWORD', ''),
+    'database': os.getenv('DB_NAME', 'debugging'),
+    'port': int(os.getenv('DB_PORT', 3306))
 }
+
+def get_db_connection():
+    """Get database connection with error handling"""
+    try:
+        connection = mysql.connector.connect(**db_config)
+        return connection
+    except mysql.connector.Error as err:
+        print(f"Database connection error: {err}")
+        return None
 
 
 qn_points = [10, 10, 10, 10, 10]
