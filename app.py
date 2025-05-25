@@ -363,7 +363,7 @@ def login():
                 else:
                     return redirect(url_for('show_index_py'))
             else:
-                return f'Select {"Python" if user['lang'] == 'py' else "C"} as language & try again'
+                return f'Select {"Python" if user["lang"] == "py" else "C"} as language & try again'
         else:
             try:
                 cursor.execute('INSERT INTO users (username, name, lang, phone) VALUES (%s, %s, %s, %s)',
